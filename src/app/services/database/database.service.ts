@@ -21,15 +21,15 @@ import {
 })
 export class DatabaseService {
   private database: SQLiteObject;
-  private dbReady: BehaviorSubject < boolean > = new BehaviorSubject(false);
+  private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
 
   constructor(private plt: Platform, private sqlite: SQLite, private utils: UtilsService) {
     this.plt.ready().then(() => {
       this.sqlite.create({
-          name: 'people.db',
-          location: 'default'
-        })
+        name: 'people.db',
+        location: 'default'
+      })
         .then((db: SQLiteObject) => {
 
           db.executeSql('CREATE TABLE IF NOT EXISTS generos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre VARCHAR NOT NULL);', [])
@@ -55,22 +55,24 @@ export class DatabaseService {
   loadGenero() {
     return this.database.executeSql('SELECT * FROM generos ', []);
   }
+
   addGenero(genero) {
 
-    let generoF=genero.substring(0,1).toUpperCase()+genero.substring(1,genero.length).toLowerCase();
-    let añadir = true;
-
     this.loadGenero().then(data => {
-        for (var i = 0; i < data.rows.length; i++) {
-          if(data.rows.item(i).nombre===generoF){
-            añadir=false;
-            break;
-          }
-        }
 
-        if(añadir){
-          this.database.executeSql('INSERT INTO generos (nombre) VALUES (?)', [genero])
+      let generoF = genero.substring(0, 1).toUpperCase() + genero.substring(1, genero.length).toLowerCase();
+      let añadir = true;
+
+      for (var i = 0; i < data.rows.length; i++) {
+        if (data.rows.item(i).nombre === generoF) {
+          añadir = false;
+          break;
         }
+      }
+
+      if (añadir) {
+        this.database.executeSql('INSERT INTO generos (nombre) VALUES (?)', [genero])
+      }
     })
 
   }
@@ -80,7 +82,8 @@ export class DatabaseService {
   }
 
   addPeople(person_obj) {
-    return this.database.executeSql('INSERT INTO people (nombre,edad,genero,color_ojos,color_pelo,detalles) VALUES (?,?,?,?,?,?)', [person_obj.nombre, person_obj.edad, person_obj.genero, person_obj.color_ojos, person_obj.color_pelo, person_obj.detalles]).catch(err => console.log(err))
+    let generoF = person_obj.genero.substring(0, 1).toUpperCase() + person_obj.genero.substring(1, person_obj.genero.length).toLowerCase();
+    return this.database.executeSql('INSERT INTO people (nombre,edad,genero,color_ojos,color_pelo,detalles) VALUES (?,?,?,?,?,?)', [person_obj.nombre, person_obj.edad, generoF, person_obj.color_ojos, person_obj.color_pelo, person_obj.detalles]).catch(err => console.log(err))
   }
 
   updatePeople(person_obj) {
