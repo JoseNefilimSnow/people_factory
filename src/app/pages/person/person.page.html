@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-toolbar color="best">
+    <ion-title><b>{{persona.nombre}}</b></ion-title>
+    <ion-buttons slot="start">
+        <ion-button size="large" (click)="close()">
+          <ion-icon name="arrow-round-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+
+  <ion-item>
+    <ion-label *ngIf="persona.edad != null|| persona.edad != ''||persona.edad!=undefined"><b>Edad:</b> {{persona.edad}}</ion-label>
+  </ion-item>
+
+  <ion-item>
+      <ion-label *ngIf="persona.genero != null|| persona.genero != ''||persona.genero != undefined"><b>Género:</b> {{persona.genero}}</ion-label>
+  </ion-item>
+
+  <ion-item>
+      <ion-label><b>Color de ojos: </b> {{persona.color_ojos}}</ion-label>
+  </ion-item>
+
+  <ion-item>
+      <ion-label><b>Color de pelo: </b> {{persona.pelo}}</ion-label>
+  </ion-item>
+
+  <ion-item>
+      <ion-label text-wrap><b>Detalles: </b> {{persona.detalles}}</ion-label>
+  </ion-item>
+</ion-content>
