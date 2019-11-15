@@ -20,10 +20,10 @@ import {
 })
 export class HomePage {
   arrayGeneros;
-  generoElegido= "todo";
+  generoElegido = "todo";
   arrayPersonasDB;
   arrayPersonasDisplay;
-  constructor(private db: DatabaseService, private utils: UtilsService, private router: Router) {}
+  constructor(private db: DatabaseService, private utils: UtilsService, private router: Router) { }
 
   ionViewDidEnter() {
     this.arrayGeneros = [];
@@ -73,46 +73,64 @@ export class HomePage {
   }
 
   filter() {
+    this.arrayPersonasDisplay = [];
+    if (this.generoElegido === "todo") {
       this.arrayPersonasDisplay = [];
-      if (this.generoElegido === "todo") {
-        this.arrayPersonasDisplay = [];
-        this.arrayPersonasDB = [];
-        this.db.loadPeople().then(data => {
-          if (data.rows.length > 0) {
-            for (var i = 0; i < data.rows.length; i++) {
-              console.log(data.rows.item(i).genero)
-              this.arrayPersonasDB.push({
-                id: data.rows.item(i).id,
-                nombre: data.rows.item(i).nombre,
-                edad: data.rows.item(i).edad,
-                genero: data.rows.item(i).genero,
-                color_ojos: data.rows.item(i).color_ojos,
-                color_pelo: data.rows.item(i).color_pelo,
-                detalles: data.rows.item(i).detalles
-              })
-            }
-            this.arrayPersonasDisplay = this.arrayPersonasDB;
+      this.arrayPersonasDB = [];
+      this.db.loadPeople().then(data => {
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            console.log(data.rows.item(i).genero)
+            this.arrayPersonasDB.push({
+              id: data.rows.item(i).id,
+              nombre: data.rows.item(i).nombre,
+              edad: data.rows.item(i).edad,
+              genero: data.rows.item(i).genero,
+              color_ojos: data.rows.item(i).color_ojos,
+              color_pelo: data.rows.item(i).color_pelo,
+              detalles: data.rows.item(i).detalles
+            })
           }
-        })
-            } else {
-              for (let item of this.arrayPersonasDB) {
-                if (item.genero === this.generoElegido) {
-                  this.arrayPersonasDisplay.push(item);
-                }
-              }
-            }
-          }
-
-          toDetails(index) {
-            let params: NavigationExtras = {
-              state: {
-                person: this.arrayPersonasDisplay[index]
-              }
-            }
-            this.router.navigate(["person"], params)
-          }
-
-          addP() {
-            this.router.navigate(["create-person"])
-          }
+          this.arrayPersonasDisplay = this.arrayPersonasDB;
         }
+      })
+    } else {
+      for (let item of this.arrayPersonasDB) {
+        if (item.genero.toLowerCase() === this.generoElegido.toLowerCase()) {
+          this.arrayPersonasDisplay.push(item);
+        }
+      }
+    }
+  }
+
+  toDetails(index) {
+    let params: NavigationExtras = {
+      state: {
+        person: this.arrayPersonasDisplay[index]
+      }
+    }
+    this.router.navigate(["person"], params)
+  }
+
+  addP() {
+    this.router.navigate(["create-person"])
+  }
+
+  edit(index) {
+    let params: NavigationExtras = {
+      state: {
+        person: this.arrayPersonasDisplay[index]
+      }
+    }
+    this.router.navigate(["create-person"], params)
+  }
+
+  delete(index) {
+    this.db.deletePeople(this.arrayPersonasDisplay[index].id)
+    this.ionViewDidEnter();
+  }
+
+  info() {
+    this.utils.presentAlert("Consejo", "Puedes mover el elemento de la lista a la izquierda para editar o borrarlo", [{ text: "¡Gracias!" }])
+  }
+}

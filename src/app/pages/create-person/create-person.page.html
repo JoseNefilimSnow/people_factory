@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="best">
-    <ion-title><b>Añadir Persona:</b></ion-title>
+    <ion-title><b>{{titulo}}</b></ion-title>
     <ion-buttons slot="start">
       <ion-button size="large" (click)="close()">
         <ion-icon name="arrow-round-back"></ion-icon>
@@ -10,43 +10,44 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="personForm" (ngSubmit)="personSubmit()">
+  <form [formGroup]="personForm" (ngSubmit)="personSubmit()">
 
-        <ion-item>
-          <ion-input type="text" placeholder="Nombre" formControlName="nombre"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-          <ion-input type="number" placeholder="Edad" formControlName="edad"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-            <ion-input type="text" placeholder="Género" formControlName="genero"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-            <ion-input type="text" placeholder="Color de ojos" formControlName="color_ojos"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-            <ion-input type="text" placeholder="Color de pelo" formControlName="color_pelo"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-            <ion-textarea type="text" placeholder="Otros detalles" formControlName="detalles" autoGrow=true></ion-textarea>
+    <ion-item>
+      <ion-input type="text" placeholder="Nombre" formControlName="nombre"></ion-input>
+    </ion-item>
 
-        </ion-item>
-  
-        <ion-row>
-  
-          <ion-col size="6">
-            <ion-button  expand="full" fill="outline" shape="round" color="danger" (click)="close()">Cancelar</ion-button>
-          </ion-col>
-  
-          <ion-col size="6">
-            <ion-button  expand="full" fill="outline" shape="round" color="primary" type="submit" [disabled]="!personForm.valid">Enviar</ion-button>
-          </ion-col>
-  
-        </ion-row>
-      </form>
+    <ion-item>
+      <ion-input type="number" placeholder="Edad" formControlName="edad"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Género" formControlName="genero"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Color de ojos" formControlName="color_ojos"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Color de pelo" formControlName="color_pelo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea type="text" placeholder="Otros detalles" formControlName="detalles" autoGrow=true></ion-textarea>
+
+    </ion-item>
+
+    <ion-row>
+
+      <ion-col size="6">
+        <ion-button expand="full" fill="outline" shape="round" color="danger" (click)="close()">Cancelar</ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button expand="full" fill="outline" shape="round" color="primary" type="submit"
+          [disabled]="!personForm.valid">Enviar</ion-button>
+      </ion-col>
+
+    </ion-row>
+  </form>
 </ion-content>

@@ -86,9 +86,8 @@ export class DatabaseService {
     return this.database.executeSql('INSERT INTO people (nombre,edad,genero,color_ojos,color_pelo,detalles) VALUES (?,?,?,?,?,?)', [person_obj.nombre, person_obj.edad, generoF, person_obj.color_ojos, person_obj.color_pelo, person_obj.detalles]).catch(err => console.log(err))
   }
 
-  updatePeople(person_obj) {
-    let data = [person_obj.nombre, person_obj.edad, person_obj.genero, person_obj.color_ojos, person_obj.color_pelo, person_obj.detalles];
-    return this.database.executeSql(`UPDATE people SET nombre = ?, edad = ?, genero = ?, color_ojos = ?, color_pelo = ?, detalles = ? WHERE id = ${person_obj.id}`, data);
+  updatePeople(id, person_obj) {
+    return this.database.executeSql(`UPDATE people SET nombre = ?,edad = ?,genero = ?,color_ojos = ?,color_pelo = ?,detalles= ? WHERE id = ${id}`, [person_obj.nombre, person_obj.edad, person_obj.genero, person_obj.color_ojos, person_obj.color_pelo, person_obj.detalles]).catch(err => console.log(err));
   }
 
   deletePeople(id) {

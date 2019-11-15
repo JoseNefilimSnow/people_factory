@@ -12,13 +12,13 @@ import { AlertButton } from '@ionic/core';
 })
 export class UtilsService {
 
-  constructor(private alrtCtrl: AlertController, private toastCtrl: ToastController, private loadctrl : LoadingController) {}
+  constructor(private alrtCtrl: AlertController, private toastCtrl: ToastController, private loadctrl: LoadingController) { }
 
   async presentAlert(header: string,
     message: string,
     buttons: AlertButton[],
-    subHeader ? : string,
-    inputs ? : [{}]) {
+    subHeader?: string,
+    inputs?: [{}]) {
 
     let alrt = await this.alrtCtrl.create({
       header: header,
@@ -34,22 +34,22 @@ export class UtilsService {
     let loading = await this.loadctrl.create({
       spinner: 'circular',
       message: text,
-      duration:500
+      duration: 500
     });
-  
+
     await loading.present();
   }
 
-  async loadingDismiss(){
+  async loadingDismiss() {
     await this.loadctrl.dismiss();
   }
-  async presentToast(text,duration,pos) {
+  async presentToast(text, duration, pos) {
     let loading = await this.toastCtrl.create({
       message: text,
-      duration:duration,
-      position:pos
+      duration: duration,
+      position: pos
     });
-  
+
     await loading.present();
   }
 

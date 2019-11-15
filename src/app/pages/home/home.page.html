@@ -2,44 +2,58 @@
 
   <ion-toolbar color="best">
     <ion-title><b>Fabrica de personas</b></ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button large (click)="loadList()">
+    <ion-buttons slot="end">
+      <ion-button large (click)="ionViewDidEnter()">
         <ion-icon name="refresh"></ion-icon>
       </ion-button>
       <ion-button large (click)="info()">
         <ion-icon name="information"></ion-icon>
       </ion-button>
-    </ion-buttons> -->
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content center-text>
-    <br />
+  <br />
 
-    <ion-item>
-        <ion-label>Mostrar por generos:</ion-label>
-    <ion-select (ionChange)="filter()" [(ngModel)]="generoElegido" >
-      <ion-select-option  value="todo">Todo</ion-select-option>
+  <ion-item>
+    <ion-label>Mostrar por generos:</ion-label>
+    <ion-select (ionChange)="filter()" [(ngModel)]="generoElegido">
+      <ion-select-option value="todo">Todo</ion-select-option>
       <ion-select-option *ngFor="let genero of arrayGeneros" value={{genero}}>{{genero}}</ion-select-option>
     </ion-select>
-    </ion-item>
-  
-    <br />
+  </ion-item>
 
-    
-    <ion-list *ngFor="let persona of arrayPersonasDisplay; let i =index">
+  <br />
+
+
+  <ion-list *ngFor="let persona of arrayPersonasDisplay; let i =index">
+    <ion-item-sliding>
       <ion-item (click)="toDetails(i)">
         <ion-label text-wrap><b>Nombre:</b> {{persona.nombre}}</ion-label>
-        <ion-label *ngIf="persona.edad != null|| persona.edad != ''||persona.edad != undefined" text-wrap><b>Edad:</b> {{persona.edad}}</ion-label>
-        <ion-label *ngIf="persona.genero != null|| persona.genero != ''||persona.genero != undefined" text-wrap><b>Género:</b> {{persona.genero}}</ion-label>
+        <ion-label *ngIf="persona.edad != null|| persona.edad != ''||persona.edad != undefined" text-wrap><b>Edad:</b>
+          {{persona.edad}}</ion-label>
+        <ion-label *ngIf="persona.genero != null|| persona.genero != ''||persona.genero != undefined" text-wrap>
+          <b>Género:</b> {{persona.genero}}</ion-label>
       </ion-item>
-    </ion-list>
-    
-    <ion-fab vertical="bottom" horizontal="end">
-      <ion-fab-button bottom color="dark" (click)="addP()">
-        <ion-icon name="md-add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="edit(i)">
+          <ion-icon name="create"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="delete(i)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button bottom color="dark" (click)="addP()">
+      <ion-icon name="md-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
